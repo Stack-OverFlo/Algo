@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-#from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
 import datetime as dt
 import re

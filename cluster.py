@@ -11,7 +11,7 @@ from graphviz import Graph
 import csv
 
 # Load the data to a pandas dataframe
-dataframe = pd.read_csv("netflix_titles.csv")
+dataframe = pd.read_csv("data.csv")
 
 # get the number of movies
 nb_movies = len(dataframe)

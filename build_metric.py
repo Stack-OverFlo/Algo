@@ -6,9 +6,11 @@ import re
 import time
 import networkx as nx
 import math
+from graphviz import Graph
 
 # Load the data to a pandas dataframe
 dataframe = pd.read_csv("data.csv")
+dataframe = dataframe.head(100)
 
 # get the number of movies
 nb_movies = len(dataframe)
@@ -50,8 +52,8 @@ def compute_dissimilarity(movie_1_id, movie_2_id):
     movie_1_release_year = dataframe.loc[movie_1_id][4]
     movie_2_release_year = dataframe.loc[movie_2_id][4]
 
-    movie_1_duration = dataframe.loc[movie_1_id][5]
-    movie_2_duration = dataframe.loc[movie_2_id][5]
+    # movie_1_duration = dataframe.loc[movie_1_id][5]
+    # movie_2_duration = dataframe.loc[movie_2_id][5]
 
     movie_1_country = dataframe.loc[movie_1_id][3]
     movie_2_country = dataframe.loc[movie_2_id][3]
@@ -85,7 +87,7 @@ def compute_dissimilarity(movie_1_id, movie_2_id):
 dissimilarity_matrix = np.zeros((nb_movies, nb_movies))
 print("compute dissimilarities")
 for movie_1_id in range(nb_movies):
-    for movie_2_id in range(nb_movies):
+    for movie_2_id in range(movie_1_id + 1, nb_movies):
         dissimilarity = compute_dissimilarity(movie_1_id, movie_2_id)
         dissimilarity_matrix[movie_1_id, movie_2_id] = dissimilarity
 
@@ -97,7 +99,7 @@ threshold = 15
 dot = Graph(comment='Graph created from complex data',
             strict=True)
 for movie_id in range(nb_movies):
-    movie_name = dataframe.loc[movie_id][0]
+    movie_name = dataframe.loc[movie_id][1]
     dot.node(movie_name)
 
 for movie_1_id in range(nb_movies):

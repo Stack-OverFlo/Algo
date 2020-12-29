@@ -7,9 +7,11 @@ import time
 import networkx as nx
 import math
 from graphviz import Graph
+from spicy import *
 
 # Load the data to a pandas dataframe
 dataframe = pd.read_csv("data.csv")
+# resize the dataframe
 dataframe = dataframe.head(100)
 
 # get the number of movies
@@ -33,6 +35,7 @@ dataframe.drop_duplicates(inplace=True)
 
 # convert to date time
 dataframe['release_year'] = pd.to_datetime(dataframe['release_year'])
+
 # convert to Epoch
 dataframe['release_year'] = (dataframe['release_year'] - dt.datetime(1970, 1, 1)).dt.total_seconds()
 print("columns of the dataset:\n", dataframe.columns)
@@ -52,9 +55,6 @@ def compute_dissimilarity(movie_1_id, movie_2_id):
     movie_1_release_year = dataframe.loc[movie_1_id][4]
     movie_2_release_year = dataframe.loc[movie_2_id][4]
 
-    # movie_1_duration = dataframe.loc[movie_1_id][5]
-    # movie_2_duration = dataframe.loc[movie_2_id][5]
-
     movie_1_country = dataframe.loc[movie_1_id][3]
     movie_2_country = dataframe.loc[movie_2_id][3]
 
@@ -65,7 +65,7 @@ def compute_dissimilarity(movie_1_id, movie_2_id):
 
     # we build a hybrid dissimilarity
     dissimilarity = math.sqrt(
-        (movie_1_release_year-movie_2_release_year)**2+dissimilarity_country)
+        (movie_1_release_year-movie_2_release_year)**2+(dissimilarity_country))
 
     # # plot 
     # x = dataframe['release_year']
